@@ -106,26 +106,28 @@ def save_to_file(content):
             
 def converter(input_text):
     morf_code=''
-    for character in input_text:
-        uppercase_character=character.upper()
-        if uppercase_character == " ":
-            morf_code +=morse_text[uppercase_character]
-        else:
-            morf_code +=morse_text[uppercase_character]+" "
+    for word in input_text:
+        strip_word=word.strip()
+        for character in strip_word:
+            if character == " ":
+                morf_code +=morse_text[character]
+            else:
+                morf_code +=morse_text[character.upper()]+" "          
+        morf_code+='\n'
     
     save_to_file(morf_code)
     return morf_code
 
 if choice== 1:
     with open('User.txt','r') as file:
-        file_content=file.read()
+        file_content=file.readlines()
         output=converter(file_content)
-        print(f'Code: {output}')
+        print(f'Code:\n{output}')
 
 elif choice ==2:
     input_text=input("Enter your sentence to convert to Morse code:")
     output=converter(input_text)
-    print(f'Code: {output}')
+    print(f'Code:\n{output}')
 
 else:
     raise ValueError("Invalid choice. Please enter 1 or 2.")
